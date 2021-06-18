@@ -1,0 +1,48 @@
+{
+  "name": "hotel-booking",
+  "version": "0.0.1",
+  "description": "hotel booking test",
+  "scripts": {
+    "start": "ts-node src/main.ts --respawn --trasnpileOnly",
+    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
+    "refresh": "ts-node ./node_modules/typeorm/cli.js schema:drop && ts-node ./node_modules/typeorm/cli.js schema:sync",
+    "refresh:seed": "npm run refresh && npm run seed"
+  },
+  "dependencies": {
+    "@nestjs/common": "^7.6.18",
+    "@nestjs/core": "^7.6.18",
+    "@nestjs/platform-express": "^7.6.18",
+    "@nestjs/swagger": "^4.8.0",
+    "@nestjs/typeorm": "^7.1.5",
+    "@types/faker": "^5.5.6",
+    "dotenv": "^10.0.0",
+    "faker": "^5.5.3",
+    "joi": "^17.4.0",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.1.0",
+    "swagger-ui-express": "^4.1.6",
+    "typeorm": "^0.2.34",
+    "typeorm-seeding": "^1.6.1"
+  },
+  "devDependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@tinkoff/linters": "^1.0.1",
+    "@types/hapi__joi": "^17.1.6",
+    "@types/joi": "^17.2.3",
+    "@types/node": "^15.12.2",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "eslint": "^7.28.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "keywords": [
+    "hotel",
+    "booking"
+  ],
+  "author": "Sergei Kalinin",
+  "license": "MIT"
+}
