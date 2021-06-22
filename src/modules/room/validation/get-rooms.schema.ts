@@ -1,6 +1,7 @@
 import Joi = require('@hapi/joi');
+import { endDateSchema, startDateSchema } from '../../../utils/common.schemas';
 
 export const getRoomsSchema = Joi.object({
-    start: Joi.date().required(),
-    end: Joi.date().min(Joi.ref('start')).required(),
+    start: startDateSchema.required(),
+    end: endDateSchema.required(),
 });

@@ -10,9 +10,7 @@ export class Room {
     @PrimaryGeneratedColumn()
     public id: number;
 
-    @Column({
-        unique: true,
-    })
+    @Column()
     public name: string;
 
     @OneToMany(() => Booking, (object) => object.room)

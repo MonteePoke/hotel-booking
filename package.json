@@ -6,7 +6,8 @@
     "start": "ts-node src/main.ts --respawn --trasnpileOnly",
     "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
     "refresh": "ts-node ./node_modules/typeorm/cli.js schema:drop && ts-node ./node_modules/typeorm/cli.js schema:sync",
-    "refresh:seed": "npm run refresh && npm run seed"
+    "refresh:seed": "npm run refresh && npm run seed",
+    "test": "mocha -R mochawesome -r ts-node/register tests/**/*.test.ts "
   },
   "dependencies": {
     "@nestjs/common": "^7.6.18",
@@ -18,6 +19,7 @@
     "dotenv": "^10.0.0",
     "faker": "^5.5.3",
     "joi": "^17.4.0",
+    "moment": "^2.29.1",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.1.0",
@@ -27,14 +29,20 @@
   },
   "devDependencies": {
     "@hapi/joi": "^17.1.1",
+    "@nestjs/testing": "^7.6.18",
     "@tinkoff/linters": "^1.0.1",
     "@types/hapi__joi": "^17.1.6",
     "@types/joi": "^17.2.3",
+    "@types/mocha": "^8.2.2",
     "@types/node": "^15.12.2",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "eslint": "^7.28.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "mocha": "^9.0.1",
+    "mochawesome": "^6.2.2",
     "prettier": "^2.3.1",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4"

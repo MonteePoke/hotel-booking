@@ -14,10 +14,10 @@ export class Booking {
     @JoinColumn()
     public room: Room;
 
-    @Column()
+    @Column({ type: 'date' })
     public start: Date;
 
-    @Column()
+    @Column({ type: 'date' })
     public end: Date;
 
     @Column()

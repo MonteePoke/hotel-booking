@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Brackets, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Room } from '../../database/entities/room.entity';
 
@@ -15,10 +15,12 @@ export class RoomService {
             this.roomRepository
                 .createQueryBuilder('room')
                 // Ищем резеврации которые накладываются на диапазон нужных дат
-                .leftJoin(
+                .leftJoinAndSelect(
                     'room.bookings',
                     'booking',
-                    'booking.end between :start and :end or booking.start between :start and :end or :start between booking.start and booking.end',
+                    'booking.end between :start and :end ' +
+                        'or booking.start between :start and :end ' +
+                        'or :start between booking.start and booking.end',
                     {
                         start: start,
                         end: end,

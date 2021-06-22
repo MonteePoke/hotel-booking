@@ -10,5 +10,5 @@ module.exports = {
 
     entities: ['./src/database/entities/*.entity.ts'],
     seeds: ['./src/database/seeders/*.seeder.ts'],
-    factories: ['./src/database/factories/*.factory.ts'],
+    factories: [`${__dirname}/src/database/factories/*.factory.ts`],
 };
