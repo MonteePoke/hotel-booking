@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Booking } from '../src/database/entities/booking.entity';
+import { Room } from '../src/database/entities/room.entity';
 import { config as dotenv } from 'dotenv';
-import { Room } from './entities/room.entity';
-import { Booking } from './entities/booking.entity';
 dotenv();
 
 @Module({
@@ -17,9 +17,10 @@ dotenv();
             entities: [Room, Booking],
             autoLoadEntities: true,
             synchronize: true,
+            dropSchema: true,
             logging: 'all',
-            schema: 'public',
+            schema: 'test',
         }),
     ],
 })
-export class DbModule {}
+export class TestDbModule {}

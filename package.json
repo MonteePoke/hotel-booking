@@ -1,6 +1,6 @@
 {
   "name": "hotel-booking",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "hotel booking test",
   "scripts": {
     "start": "ts-node src/main.ts --respawn --trasnpileOnly",
