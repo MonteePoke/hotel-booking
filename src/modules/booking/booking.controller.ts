@@ -11,7 +11,7 @@ export class BookingController {
     constructor(private readonly bookingService: BookingService) {}
 
     @Post()
-    @ApiBody({ type: [CreateBookingDto] })
+    @ApiBody({ type: CreateBookingDto })
     createBooking(
         @Body(new JoiValidationPipe(createBookingSchema)) createBookingDto: CreateBookingDto,
     ) {

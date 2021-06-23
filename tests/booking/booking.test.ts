@@ -5,6 +5,8 @@ import { expect, request } from 'chai';
 import { serverUrl, testingModule } from '../init-test';
 import { beforeEach } from 'mocha';
 import { BookingController } from '../../src/modules/booking/booking.controller';
+import Joi from '@hapi/joi';
+import { createBookingSchema } from '../../src/modules/booking/validation/create-booking.schema';
 
 describe('Создание бронирования', () => {
     let bookingController: BookingController;
@@ -58,31 +60,43 @@ describe('Создание бронирования', () => {
         await factory(Booking)().create({ room: testRoom, start: startDate, end: endDate });
     });
 
-    it('Если искомый диапазон совпадает с диапазоном бронирования - бронирование не должно выполниться', async () => {
+    it('Если конец бронируемого диапазона раньше начала - должна быть ошибка валидации', async () => {
+        const result: Joi.ValidationResult = createBookingSchema.validate({
+            start: endDate.toISOString(),
+            end: startDate.toISOString(),
+            roomId: testRoom.id,
+            booker_name: 'John Doe',
+            booker_phone: '88005553535',
+            booker_mail: 'example@mail.ru',
+        });
+        expect(result.error).not.to.be.equal(undefined);
+    });
+
+    it('Если бронируемый диапазон совпадает с диапазоном существующего бронирования - бронирование не должно выполниться', async () => {
         await testMakeBooking(startDate, endDate, false);
     });
 
-    it('Если начало и конец искомого диапазона приходятся на начало диапазона бронирования - бронирование не должно выполниться', async () => {
+    it('Если начало и конец бронируемого диапазона приходятся на начало диапазона существующего бронирования - бронирование не должно выполниться', async () => {
         await testMakeBooking(startDate, startDate, false);
     });
 
-    it('Если начало и конец искомого диапазона приходятся на конец диапазона бронирования - бронирование не должно выполниться', async () => {
+    it('Если начало и конец бронируемого диапазона приходятся на конец диапазона существующего бронирования - бронирование не должно выполниться', async () => {
         await testMakeBooking(endDate, endDate, false);
     });
 
-    it('Если искомый диапазон находится внутри диапазона бронирования - бронирование не должно выполниться', async () => {
+    it('Если бронируемый диапазон находится внутри диапазона существующего бронирования - бронирование не должно выполниться', async () => {
         await testMakeBooking(betweenDate, betweenDate, false);
     });
 
-    it('Если искомый диапазон шире диапазона бронирования - бронирование не должно выполниться', async () => {
+    it('Если бронируемый диапазон шире диапазона существующего бронирования - бронирование не должно выполниться', async () => {
         await testMakeBooking(beforeStartDate, afterEndDate, false);
     });
 
-    it('Если искомый диапазон находится до диапазона бронирования - бронирование должно выполниться', async () => {
+    it('Если бронируемый диапазон находится до диапазона существующего бронирования - бронирование должно выполниться', async () => {
         await testMakeBooking(beforeStartDate, beforeStartDate, true);
     });
 
-    it('Если искомый диапазон находится после диапазона бронирования - бронирование должно выполниться', async () => {
+    it('Если бронируемый диапазон находится после диапазона существующего бронирования - бронирование должно выполниться', async () => {
         await testMakeBooking(afterEndDate, afterEndDate, true);
     });
 });

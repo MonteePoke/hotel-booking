@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const customDateValidator: CustomValidator = (value, helper) => {
     if (moment(helper.original, true).isValid()) {
-        return true;
+        return new Date(helper.original);
     } else {
         return helper.message({
             custom: `"${helper.state.path}" must be a valid date`,
@@ -13,5 +13,5 @@ const customDateValidator: CustomValidator = (value, helper) => {
 
 export const startDateSchema: Joi.Schema = Joi.date().custom(customDateValidator);
 export const endDateSchema: Joi.Schema = Joi.date()
-    .min(Joi.ref('start'))
-    .custom(customDateValidator);
+    .custom(customDateValidator)
+    .min(Joi.ref('start'));

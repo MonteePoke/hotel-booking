@@ -1,4 +1,4 @@
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { RoomService } from './room.service';
 import { Controller, Get, Query } from '@nestjs/common';
 import { JoiValidationPipe } from '../../validation/joi-validation-pipe';
@@ -11,7 +11,7 @@ export class RoomController {
     constructor(private readonly roomService: RoomService) {}
 
     @Get()
-    @ApiBody({ type: [GetRoomsDto] })
+    @ApiQuery({ type: GetRoomsDto })
     findMany(@Query(new JoiValidationPipe(getRoomsSchema)) getRoomsQuery: GetRoomsDto) {
         return this.roomService.findMany(getRoomsQuery.start, getRoomsQuery.end);
     }

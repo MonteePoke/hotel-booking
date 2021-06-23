@@ -4,6 +4,8 @@ import { Booking } from '../../src/database/entities/booking.entity';
 import { expect, request } from 'chai';
 import { serverUrl, testingModule } from '../init-test';
 import { RoomController } from '../../src/modules/room/room.controller';
+import { getRoomsSchema } from '../../src/modules/room/validation/get-rooms.schema';
+import Joi from '@hapi/joi';
 
 describe('Поиск комнат', () => {
     let roomController: RoomController;
@@ -44,6 +46,14 @@ describe('Поиск комнат', () => {
         roomController = testingModule.get<RoomController>(RoomController);
         testRoom = await factory(Room)().create();
         await factory(Booking)().create({ room: testRoom, start: startDate, end: endDate });
+    });
+
+    it('Если конец искомого диапазона раньше начала - должна быть ошибка валидации', async () => {
+        const result: Joi.ValidationResult = getRoomsSchema.validate({
+            start: endDate.toISOString(),
+            end: startDate.toISOString(),
+        });
+        expect(result.error).not.to.be.equal(undefined);
     });
 
     it('Если искомый диапазон совпадает с диапазоном бронирования - комната не должна быть в ответе', async () => {
